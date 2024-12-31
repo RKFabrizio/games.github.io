@@ -4,12 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Rowdies:wght@300;400;700&family=Sixtyfour&display=swap" rel="stylesheet">
+    
     <title>Juegos</title>
     <style>
         body {
-            font-family: Poppins, sans-serif;
+             
             margin: 0;
             padding: 0;
             background-color: #272626;
@@ -77,21 +78,9 @@
             font-weight: bold;
         }
 
-        .games {
-            margin: 20px 0;
-        }
+       
 
-        .game-button {
-            background-color: #00bfff;
-            border: none;
-            color: white;
-            padding: 15px;
-            margin: 5px 0;
-            font-size: 16px;
-            border-radius: 20px;
-            width: 100%;
-            cursor: pointer;
-        }
+      
 
         .game-button:hover {
             background-color: #006FFF;
@@ -112,10 +101,46 @@
             margin-top: 20px;
             width: 100%;
             border:none;
+            font-size:20px;
+            font-family: "Sixtyfour", serif;
+            font-optical-sizing: auto;
+            font-weight: 300;
+            font-style: normal;
         }
+
+    
 
         #start-game:hover {
             background-color: #b800e6;
+        }
+
+        .gamesh1{
+            margin-top:60px;
+            font-size:40px;
+            font-family: "Sixtyfour", serif;
+            font-optical-sizing: auto;
+            font-weight: 400;
+            font-style: normal;
+        }
+
+        .game-button {
+            background-color: #00bfff;
+            border: none;
+            color: white;
+            padding: 15px;
+            margin: 5px 0;
+            font-size: 16px;
+            border-radius: 20px;
+            width: 100%;
+            cursor: pointer;
+            font-family: "Rowdies", serif;
+            font-weight: 400;
+            font-style: normal;
+        }
+
+        .games {
+            margin: 20px 0;
+      
         }
     </style>
 </head>
@@ -123,14 +148,14 @@
     <div class="container">
          
 
-        <h2>Juegos</h2>
+        <h2 class="gamesh1">JUEGOS</h2>
         <div class="games">
             <button class="game-button" onclick="selectGame(this, 'CSM - Charadas Super Masoquistas')">CSM - Charadas Super Masoquistas</button>
             <button class="game-button" onclick="selectGame(this, 'Cabrones HDP - Hora de Pelear')">Cabrones HDP - Hora de Pelear</button>
             <button class="game-button" onclick="selectGame(this, 'Yo Nunca')">Yo Nunca, Nunca</button>
         </div>
 
-        <button id="start-game" onclick="startGame()">Iniciar Juego</button>
+        <button  id="start-game" onclick="startGame()">Iniciar Juego</button>
     </div>
 
     <script>
