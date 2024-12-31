@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSM - Charadas Super Masoquistas</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #ff1493;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        h1, h2 {
+            text-align: center;
+            margin: 10px 0;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 500px;
+            text-align: center;
+        }
+
+        .rules {
+            background-color: #ffffff;
+            color: #ff1493;
+            padding: 15px;
+            border-radius: 15px;
+            margin: 20px 0;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .challenge {
+            background-color: #00bfff;
+            color: white;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 20px 0;
+            font-size: 18px;
+        }
+
+        .button {
+            background-color: #4caf50;
+            border: none;
+            color: white;
+            padding: 15px 20px;
+            font-size: 18px;
+            border-radius: 20px;
+            cursor: pointer;
+        }
+
+        .button:hover {
+            background-color: #45a049;
+        }
+
+        .timer {
+            font-size: 24px;
+            margin-top: 20px;
+            font-weight: bold;
+        }
+
+        .rules{
+            text-decoration:none;
+            list-style:none
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Yo Nunca, Nunca</h1>
+        <div class="rules">
+            <h2>Reglas del Juego:</h2>
+            <ul class="rules">
+                <li>No se vale mentir</li>
+                <li>Cada jugador, dice el Yo nunca nunca, y si tu respuesta es "si" tomas un shot</li>
+            </ul>
+            
+        </div>
+
+        <div id="challenge" class="challenge">Presiona "Generar" para obtener un reto</div>
+
+        <button class="button" onclick="generateChallenge()">Generar</button>
+  
+    </div>
+
+    <script>
+        const challenges = [
+  { id: 1, text: "Yo nunca, nunca he deseado que alguien se caiga solo para reírme." },
+  { id: 2, text: "Yo nunca, nunca he tenido un sueño erótico con alguien inesperado." },
+  { id: 3, text: "Yo nunca, nunca he fingido saber algo solo para parecer más interesante." },
+  { id: 4, text: "Yo nunca, nunca he fantaseado con alguien en esta misma habitación." },
+  { id: 5, text: "Yo nunca, nunca he hecho un chiste inapropiado en el peor momento." },
+  { id: 6, text: "Yo nunca, nunca he usado un meme como respuesta en una conversación seria." },
+  { id: 7, text: "Yo nunca, nunca he enviado un mensaje subido de tono al contacto equivocado." },
+  { id: 8, text: "Yo nunca, nunca me he reído en un momento totalmente inadecuado." },
+  { id: 9, text: "Yo nunca, nunca he pensado que los gatos dominan el mundo en secreto." },
+  { id: 10, text: "Yo nunca, nunca he tenido sexo en un lugar público." },
+  { id: 11, text: "Yo nunca, nunca he ignorado a alguien fingiendo que estaba ocupado." },
+  { id: 12, text: "Yo nunca, nunca he inventado una excusa ridícula para salir de una cita." },
+  { id: 13, text: "Yo nunca, nunca he usado ropa interior 'especial' para impresionar a alguien." },
+  { id: 14, text: "Yo nunca, nunca he deseado que mi ex pierda todo en la vida." },
+  { id: 15, text: "Yo nunca, nunca he fingido estar dormido para evitar una conversación incómoda." },
+  { id: 16, text: "Yo nunca, nunca he buscado algo raro en sitios para adultos." },
+  { id: 17, text: "Yo nunca, nunca he pensado que los bebés feos son más comunes de lo que la gente cree." },
+  { id: 18, text: "Yo nunca, nunca he perseguido a alguien en redes sociales al nivel FBI." },
+  { id: 19, text: "Yo nunca, nunca he fantaseado con un personaje ficticio." },
+  { id: 20, text: "Yo nunca, nunca he reído cuando alguien tropezó frente a mí." },
+  { id: 21, text: "Yo nunca, nunca he respondido mal a un mensaje solo porque estaba de mal humor." },
+  { id: 22, text: "Yo nunca, nunca he inventado un apodo raro para alguien que me cae mal." },
+  { id: 23, text: "Yo nunca, nunca he hecho un karaoke en la ducha." },
+  { id: 24, text: "Yo nunca, nunca he tenido fantasías con un profesor o jefe." },
+  { id: 25, text: "Yo nunca, nunca he ignorado mensajes intencionalmente." },
+  { id: 26, text: "Yo nunca, nunca he dejado propina para parecer generoso, aunque no quería." },
+  { id: 27, text: "Yo nunca, nunca he deseado que alguien tenga un mal día." },
+  { id: 28, text: "Yo nunca, nunca he gritado en la calle por diversión." },
+  { id: 29, text: "Yo nunca, nunca he fingido que entendía algo técnico en el trabajo." },
+  { id: 30, text: "Yo nunca, nunca he usado filtros para parecer mejor en una foto." },
+  { id: 31, text: "Yo nunca, nunca he deseado ser rico para vengarme de alguien." },
+  { id: 32, text: "Yo nunca, nunca he ignorado a alguien que pedía ayuda." },
+  { id: 33, text: "Yo nunca, nunca he deseado que una relación ajena fracase." },
+  { id: 34, text: "Yo nunca, nunca he culpado a otro por algo que hice." },
+  { id: 35, text: "Yo nunca, nunca he reído viendo peleas en la calle." },
+  { id: 36, text: "Yo nunca, nunca he inventado una excusa para evitar pagar algo." },
+  { id: 37, text: "Yo nunca, nunca he pensado que mi ex se merece lo peor." },
+  { id: 38, text: "Yo nunca, nunca he usado gafas de sol para esconder mi cara de 'resaca'." },
+  { id: 39, text: "Yo nunca, nunca he enviado un mensaje borracho." },
+  { id: 40, text: "Yo nunca, nunca he sido la persona más borracha de una fiesta." },
+  { id: 41, text: "Yo nunca, nunca he fingido ser otra persona en redes sociales." },
+  { id: 42, text: "Yo nunca, nunca he stalkeado a alguien hasta su perfil de 2010." },
+  { id: 43, text: "Yo nunca, nunca he olvidado el nombre de alguien después de presentarme." },
+  { id: 44, text: "Yo nunca, nunca he deseado borrar a alguien de la existencia." },
+  { id: 45, text: "Yo nunca, nunca he buscado el nombre de mi ex en redes sociales." },
+  { id: 46, text: "Yo nunca, nunca he pensado que los funerales deberían tener música divertida." },
+  { id: 47, text: "Yo nunca, nunca he hablado mal de alguien y luego fui amable con esa persona." },
+  { id: 48, text: "Yo nunca, nunca he terminado la noche con ropa ajena." },
+  { id: 49, text: "Yo nunca, nunca he dado un consejo que ni yo seguiría." },
+  { id: 50, text: "Yo nunca, nunca he sentido vergüenza ajena por alguien cercano." },
+  { id: 51, text: "Yo nunca, nunca he dejado de escuchar a alguien porque no me interesaba." },
+  { id: 52, text: "Yo nunca, nunca he terminado odiando algo que amaba." },
+  { id: 53, text: "Yo nunca, nunca he comprado algo caro y luego lo he lamentado." },
+  { id: 54, text: "Yo nunca, nunca he exagerado en una historia para hacerme ver mejor." },
+  { id: 55, text: "Yo nunca, nunca he deseado que mi jefe renuncie." },
+  { id: 56, text: "Yo nunca, nunca he fingido estar enfermo para quedarme en casa." },
+  { id: 57, text: "Yo nunca, nunca he usado comida para ligar." },
+  { id: 58, text: "Yo nunca, nunca he deseado borrar mi historial de búsquedas rápidamente." },
+  { id: 59, text: "Yo nunca, nunca he sido infiel o he ayudado a alguien a serlo." },
+  { id: 60, text: "Yo nunca, nunca he sentido celos irracionales." },
+  { id: 61, text: "Yo nunca, nunca he bloqueado a alguien porque era muy intenso." },
+  { id: 62, text: "Yo nunca, nunca he robado comida de alguien que ni conozco." },
+  { id: 63, text: "Yo nunca, nunca he usado ropa interior rota en una ocasión importante." },
+  { id: 64, text: "Yo nunca, nunca he deseado que un avión con mi enemigo tenga turbulencia." },
+  { id: 65, text: "Yo nunca, nunca he pensado que los influencers son una plaga moderna." },
+  { id: 66, text: "Yo nunca, nunca he llorado en el baño por una fiesta descontrolada." },
+  { id: 67, text: "Yo nunca, nunca he terminado en el lugar equivocado tras una noche de fiesta." },
+  { id: 68, text: "Yo nunca, nunca he perseguido mis sueños… en pijama todo el día." },
+  { id: 69, text: "Yo nunca, nunca he fantaseado con ganar la lotería y desaparecer." },
+  { id: 70, text: "Yo nunca, nunca he fingido que sabía cantar en un karaoke." },
+  { id: 71, text: "Yo nunca, nunca he deseado que alguien se quede calvo por molestarme." },
+  { id: 72, text: "Yo nunca, nunca he hecho algo malo y culpar a mi hermano o amigo." },
+  { id: 73, text: "Yo nunca, nunca he deseado que las vacaciones duraran para siempre." },
+  { id: 74, text: "Yo nunca, nunca he sentido culpa después de comprar algo caro." },
+  { id: 75, text: "Yo nunca, nunca he fantaseado con vivir en un programa de televisión." },
+  { id: 76, text: "Yo nunca, nunca he soñado con ser famoso por un día." },
+  { id: 77, text: "Yo nunca, nunca he deseado borrar un mensaje enviado al instante." },
+  { id: 78, text: "Yo nunca, nunca he ignorado llamadas de números desconocidos." },
+  { id: 79, text: "Yo nunca, nunca he deseado retroceder en el tiempo para cambiar algo tonto." },
+  { id: 80, text: "Yo nunca, nunca he querido ser otra persona por un día." },
+  { id: 81, text: "Yo nunca, nunca he querido desaparecer en medio de una reunión aburrida." },
+  { id: 82, text: "Yo nunca, nunca he fingido una emergencia para salir de una cita." },
+  { id: 83, text: "Yo nunca, nunca he dicho que estaba en camino cuando ni siquiera había salido." },
+  { id: 84, text: "Yo nunca, nunca he deseado que el tiempo pase más rápido en el trabajo." },
+  { id: 85, text: "Yo nunca, nunca he mentido en mi currículum." },
+  { id: 86, text: "Yo nunca, nunca he deseado que mi internet se caiga durante una reunión." },
+  { id: 87, text: "Yo nunca, nunca he fantaseado con renunciar de manera épica." },
+  { id: 88, text: "Yo nunca, nunca he pensado en cambiar mi vida radicalmente." },
+  { id: 89, text: "Yo nunca, nunca he deseado tener poderes sobrenaturales." },
+  { id: 90, text: "Yo nunca, nunca he olvidado pagar una cuenta importante." },
+  { id: 91, text: "Yo nunca, nunca he deseado ser invisible por un día." },
+  { id: 92, text: "Yo nunca, nunca he querido tener una máquina del tiempo para evitar errores." },
+  { id: 93, text: "Yo nunca, nunca he querido gritar en medio de un lugar público." },
+  { id: 94, text: "Yo nunca, nunca he tenido una idea brillante en la ducha y luego olvidarla." },
+  { id: 95, text: "Yo nunca, nunca he deseado tener un clon para hacer mis tareas." },
+  { id: 96, text: "Yo nunca, nunca he deseado borrar una publicación de redes sociales al instante." },
+  { id: 97, text: "Yo nunca, nunca he pensado en viajar a un lugar remoto para desconectar." },
+  { id: 98, text: "Yo nunca, nunca he querido tener un botón para retroceder en la vida." },
+  { id: 99, text: "Yo nunca, nunca he sentido envidia de la vida perfecta de alguien más en redes sociales." },
+  { id: 100, text: "Yo nunca, nunca he pensado en lo loco que sería vivir en otro planeta." },
+];
+
+        let usedChallenges = []; // Matriz temporal de retos usados
+        let timerInterval;
+
+        // Generar un reto aleatorio
+        function generateChallenge() {
+            if (usedChallenges.length === challenges.length) {
+                alert("¡Todos los retos han sido usados!");
+                return;
+            }
+
+            let challenge;
+            do {
+                const randomIndex = Math.floor(Math.random() * challenges.length);
+                challenge = challenges[randomIndex];
+            } while (usedChallenges.includes(challenge.id));
+
+            usedChallenges.push(challenge.id);
+            document.getElementById("challenge").innerText = challenge.text;
+
+            startTimer();
+        }
+
+        // Temporizador de 1:30 minutos
+        function startTimer() {
+            clearInterval(timerInterval);
+            let timeRemaining = 90; // Tiempo en segundos
+            const timerElement = document.getElementById("timer");
+
+            timerInterval = setInterval(() => {
+                const minutes = Math.floor(timeRemaining / 60);
+                const seconds = timeRemaining % 60;
+                timerElement.innerText = `${minutes}:${seconds < 10 ? "0" : ""}${seconds}`;
+                if (timeRemaining <= 0) {
+                    clearInterval(timerInterval);
+                    timerElement.innerText = "¡Tiempo terminado!";
+                }
+                timeRemaining--;
+            }, 1000);
+        }
+    </script>
+</body>
+</html>

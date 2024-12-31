@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSM - Charadas Super Masoquistas</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #ff1493;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        h1, h2 {
+            text-align: center;
+            margin: 10px 0;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 500px;
+            text-align: center;
+        }
+
+        .rules {
+            background-color: #ffffff;
+            color: #ff1493;
+            padding: 15px;
+            border-radius: 15px;
+            margin: 20px 0;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .challenge {
+            background-color: #00bfff;
+            color: white;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 20px 0;
+            font-size: 18px;
+        }
+
+        .button {
+            background-color: #4caf50;
+            border: none;
+            color: white;
+            padding: 15px 20px;
+            font-size: 18px;
+            border-radius: 20px;
+            cursor: pointer;
+        }
+
+        .button:hover {
+            background-color: #45a049;
+        }
+
+        .timer {
+            font-size: 24px;
+            margin-top: 20px;
+            font-weight: bold;
+        }
+
+        .rules{
+            text-decoration:none;
+            list-style:none
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>CSM - Charadas Super Masoquistas</h1>
+        <div class="rules">
+            <h2>Reglas del Juego:</h2>
+            <p>
+                Todos contra Todos:
+                <ul class="rules">
+                    <li>El jugador que acierte 3 veces. Puede elegir que jugador toma un shot.</li>
+                </ul>
+            </p>
+            <p>
+                Por Equipos:
+                <ul class="rules">
+                    <li>El Equipo gana con 6 puntos. El equipo perdedor toma</li>
+                </ul>
+            </p>
+        </div>
+
+        <div id="challenge" class="challenge">Presiona "Generar" para obtener un reto</div>
+
+        <button class="button" onclick="generateChallenge()">Generar</button>
+        <div class="timer" id="timer">1:30</div>
+    </div>
+
+    <script>
+        const challenges = [
+  { id: 1, text: "Estar misio buscando monedas en los bolsillos." },
+  { id: 2, text: "Dormirse en clase." },
+  { id: 3, text: "Chibolo jugando trompo." },
+  { id: 4, text: "Tu flaca/o revisándote el celular." },
+  { id: 5, text: "Pata jalador invitando a la gente a entrar." },
+  { id: 6, text: "Chibola grabando un TikTok." },
+  { id: 7, text: "Chibolo jugando fulbito en la pista." },
+  { id: 8, text: "Quedarse dormido en el micro." },
+  { id: 9, text: "Tropezarse en la vereda." },
+  { id: 10, text: "Intentar abrir una botella con los dientes." },
+  { id: 11, text: "Fingir que sabes bailar salsa." },
+  { id: 12, text: "Regatear en Gamarra." },
+  { id: 13, text: "Intentar cruzar la pista con tráfico." },
+  { id: 14, text: "Comer algo picante y buscar agua." },
+  { id: 15, text: "Pedir fiado en la bodega." },
+  { id: 16, text: "Comer chicha morada y mancharte la ropa." },
+  { id: 17, text: "Fingir que limpias mientras estás mirando el celular." },
+  { id: 18, text: "Intentar usar un encendedor que no funciona." },
+  { id: 19, text: "Atorado con un hueso de pollo." },
+  { id: 20, text: "Abrir la puerta y saludar a un desconocido." },
+  { id: 21, text: "Mamá gritando porque no apagas la luz." },
+  { id: 22, text: "Soplar sopa hirviendo y quemarte la lengua." },
+  { id: 23, text: "Tropezar con un juguete en casa." },
+  { id: 24, text: "Fingir que sabes tocar un cajón." },
+  { id: 25, text: "Jugar canicas en la calle." },
+  { id: 26, text: "Sacar algo del bolsillo y que se caiga todo." },
+  { id: 27, text: "Buscar señal levantando el celular." },
+  { id: 28, text: "Perder algo y revisarte los bolsillos mil veces." },
+  { id: 29, text: "Hacer cola para el baño y desesperarte." },
+  { id: 30, text: "Cargar bolsas pesadas del mercado." },
+  { id: 31, text: "Revisar los cojines del sofá buscando monedas." },
+  { id: 32, text: "Intentar usar un cable roto para cargar el celular." },
+  { id: 33, text: "Pedir un taxi y no tener efectivo." },
+  { id: 34, text: "Abrir una bolsa con los dientes." },
+  { id: 35, text: "Comer cancha serrana y atragantarte." },
+  { id: 36, text: "Fingir que sabes cocinar algo complicado." },
+  { id: 37, text: "Discutir con alguien por un asiento vacío." },
+  { id: 38, text: "Buscar tus llaves y no encontrarlas." },
+  { id: 39, text: "Reírte en un momento incómodo." },
+  { id: 40, text: "Cargar algo muy pesado y quedarte sin aire." },
+  { id: 41, text: "Intentar cortar algo con un cuchillo sin filo." },
+  { id: 42, text: "Fingir que limpias pero solo mueves las cosas." },
+  { id: 43, text: "Llorar porque se fue el Wi-Fi." },
+  { id: 44, text: "Intentar abrir una puerta que está trabada." },
+  { id: 45, text: "Fingir que entiendes algo complicado." },
+  { id: 46, text: "Buscar algo perdido debajo de la cama." },
+  { id: 47, text: "Fingir que no estás en casa cuando alguien toca la puerta." },
+  { id: 48, text: "Intentar comer con palitos chinos sin saber cómo usarlos." },
+  { id: 49, text: "Abrir una lata con una cuchara." },
+  { id: 50, text: "Tropezar y echarle la culpa al piso." },
+  { id: 51, text: "Dormirte en el sofá viendo TV." },
+  { id: 52, text: "Pedir ayuda para algo y no hacer nada mientras te ayudan." },
+  { id: 53, text: "Intentar encender algo sin batería." },
+  { id: 54, text: "Fingir que entiendes las reglas de un juego." },
+  { id: 55, text: "Buscar una chancla que se perdió." },
+  { id: 56, text: "Intentar prender una vela y que se apague con el aire." },
+  { id: 57, text: "Jugar a las escondidas." },
+  { id: 58, text: "Fingir que bailas huayno y zapatear mal." },
+  { id: 59, text: "Intentar subirte a una silla tambaleante." },
+  { id: 60, text: "Escapar del perro del vecino." },
+  { id: 61, text: "Fingir que sabes hacer pisco sour." },
+  { id: 62, text: "Buscar la señal del televisor y mover la antena." },
+  { id: 63, text: "Intentar meter todo en una mochila pequeña." },
+  { id: 64, text: "Soplar un globo hasta que explote." },
+  { id: 65, text: "Tropezarte en una reunión familiar." },
+  { id: 66, text: "Fingir que eres DJ en una fiesta." },
+  { id: 67, text: "Tratar de silbar pero no sabes hacerlo." },
+  { id: 68, text: "Quedarte atrapado en un ascensor." },
+  { id: 69, text: "Luchar por abrir un frasco atascado." },
+  { id: 70, text: "Comer mazamorra morada y mancharte la boca." },
+  { id: 71, text: "Fingir que no tienes hambre en una reunión." },
+  { id: 72, text: "Pedir prestado y nunca devolver." },
+  { id: 73, text: "Fingir que sabes nadar pero solo chapoteas." },
+  { id: 74, text: "Intentar arreglar algo con cinta adhesiva." },
+  { id: 75, text: "Subirte al bus con demasiadas bolsas." },
+  { id: 76, text: "Intentar abrir una puerta empujando cuando dice 'jale'." },
+  { id: 77, text: "Tropezarte en las escaleras y disimular." },
+  { id: 78, text: "Correr para evitar la lluvia." },
+  { id: 79, text: "Perder el equilibrio cargando una caja grande." },
+  { id: 80, text: "Intentar inflar una pelota sin aire." },
+  { id: 81, text: "Buscar tus lentes cuando están en tu cabeza." },
+  { id: 82, text: "Fingir que sabes usar una herramienta." },
+  { id: 83, text: "Abrir un paraguas y que se voltee con el viento." },
+  { id: 84, text: "Intentar atrapar algo que se está cayendo." },
+  { id: 85, text: "Pedir un aventón en la calle." },
+  { id: 86, text: "Fingir que te interesa una conversación aburrida." },
+  { id: 87, text: "Luchar por desatar un nudo complicado." },
+  { id: 88, text: "Intentar abrir un sobre cerrado con pegamento." },
+  { id: 89, text: "Correr tras un niño que se escapa." },
+  { id: 90, text: "Fingir que escuchas cuando no tienes audífonos." },
+  { id: 91, text: "Reventar un paquete de chifles y que se caiga todo." },
+  { id: 92, text: "Sacar algo caliente del horno sin guantes." },
+  { id: 93, text: "Intentar soplar una vela que no se apaga." },
+  { id: 94, text: "Fingir que cantas mientras escuchas música." },
+  { id: 95, text: "Saltar en una cuerda imaginaria." },
+  { id: 96, text: "Hacer como que estás buscando en el suelo." },
+  { id: 97, text: "Fingir que caminas sobre un suelo caliente." },
+  { id: 98, text: "Disimular cuando te equivocas de camino." },
+  { id: 99, text: "Intentar usar un control remoto sin pilas." },
+  { id: 100, text: "Pedir tiempo en un partido de fútbol improvisado." }
+];
+
+        let usedChallenges = []; // Matriz temporal de retos usados
+        let timerInterval;
+
+        // Generar un reto aleatorio
+        function generateChallenge() {
+            if (usedChallenges.length === challenges.length) {
+                alert("¡Todos los retos han sido usados!");
+                return;
+            }
+
+            let challenge;
+            do {
+                const randomIndex = Math.floor(Math.random() * challenges.length);
+                challenge = challenges[randomIndex];
+            } while (usedChallenges.includes(challenge.id));
+
+            usedChallenges.push(challenge.id);
+            document.getElementById("challenge").innerText = challenge.text;
+
+            startTimer();
+        }
+
+        // Temporizador de 1:30 minutos
+        function startTimer() {
+            clearInterval(timerInterval);
+            let timeRemaining = 90; // Tiempo en segundos
+            const timerElement = document.getElementById("timer");
+
+            timerInterval = setInterval(() => {
+                const minutes = Math.floor(timeRemaining / 60);
+                const seconds = timeRemaining % 60;
+                timerElement.innerText = `${minutes}:${seconds < 10 ? "0" : ""}${seconds}`;
+                if (timeRemaining <= 0) {
+                    clearInterval(timerInterval);
+                    timerElement.innerText = "¡Tiempo terminado!";
+                }
+                timeRemaining--;
+            }, 1000);
+        }
+    </script>
+</body>
+</html>

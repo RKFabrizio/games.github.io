@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSM - Charadas Super Masoquistas</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #ff1493;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        h1, h2 {
+            text-align: center;
+            margin: 10px 0;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 500px;
+            text-align: center;
+        }
+
+        .rules {
+            background-color: #ffffff;
+            color: #ff1493;
+            padding: 15px;
+            border-radius: 15px;
+            margin: 20px 0;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .challenge {
+            background-color: #00bfff;
+            color: white;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 20px 0;
+            font-size: 18px;
+        }
+
+        .button {
+            background-color: #4caf50;
+            border: none;
+            color: white;
+            padding: 15px 20px;
+            font-size: 18px;
+            border-radius: 20px;
+            cursor: pointer;
+        }
+
+        .button:hover {
+            background-color: #45a049;
+        }
+
+        .timer {
+            font-size: 24px;
+            margin-top: 20px;
+            font-weight: bold;
+        }
+
+        .rules{
+            text-decoration:none;
+            list-style:none
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Cabrones HDP</h1>
+        <div class="rules">
+            <h2>Reglas del Juego:</h2>
+            <ul class="rules">
+                <li>No se vale molestarse, todo es chow/meme</li>
+                <li>Una persona no puede tomar 4 veces seguidas no jodan</li>
+            </ul>
+        </div>
+
+        <div id="challenge" class="challenge">Presiona "Generar" para obtener un reto</div>
+
+        <button class="button" onclick="generateChallenge()">Generar</button>
+  
+    </div>
+
+    <script>
+        const challenges = [
+  { id: 1, text: "Uno de nosotros fue concebido por el culo ¿Quién?" },
+  { id: 2, text: "Uno de nosotros tiene cara de virgen ¿Quién?" },
+  { id: 3, text: "Uno de nosotros es muy pobre ¿Quién?" },
+  { id: 4, text: "Uno de nosotros sería el primero en traicionar al grupo ¿Quién?" },
+  { id: 5, text: "Uno de nosotros huele raro y nunca lo admite ¿Quién?" },
+  { id: 6, text: "Uno de nosotros está aquí por lástima ¿Quién?" },
+  { id: 7, text: "Uno de nosotros definitivamente moriría primero en un apocalipsis ¿Quién?" },
+  { id: 8, text: "Uno de nosotros tiene los peores gustos en pareja ¿Quién?" },
+  { id: 9, text: "Uno de nosotros sería despedido el primer día de trabajo ¿Quién?" },
+  { id: 10, text: "Uno de nosotros seguramente no se ducha todos los días ¿Quién?" },
+  { id: 11, text: "Uno de nosotros sería un mal padre/madre ¿Quién?" },
+  { id: 12, text: "Uno de nosotros es tan tóxico que no debería estar aquí ¿Quién?" },
+  { id: 13, text: "Uno de nosotros fingiría estar en coma para evitar responsabilidades ¿Quién?" },
+  { id: 14, text: "Uno de nosotros se ríe en los momentos más inapropiados ¿Quién?" },
+  { id: 15, text: "Uno de nosotros no tiene remedio en la vida ¿Quién?" },
+  { id: 16, text: "Uno de nosotros gastaría todo su dinero en algo estúpido ¿Quién?" },
+  { id: 17, text: "Uno de nosotros siempre termina en situaciones vergonzosas ¿Quién?" },
+  { id: 18, text: "Uno de nosotros sería arrestado por algo ridículo ¿Quién?" },
+  { id: 19, text: "Uno de nosotros definitivamente no sabe besar ¿Quién?" },
+  { id: 20, text: "Uno de nosotros se tiraría a la ex de un amigo ¿Quién?" },
+  { id: 21, text: "Uno de nosotros no tiene talento para nada ¿Quién?" },
+  { id: 22, text: "Uno de nosotros tiene los peores chistes ¿Quién?" },
+  { id: 23, text: "Uno de nosotros es tan codo que jamás invitaría nada ¿Quién?" },
+  { id: 24, text: "Uno de nosotros se cree más atractivo de lo que realmente es ¿Quién?" },
+  { id: 25, text: "Uno de nosotros tiene el IQ más bajo ¿Quién?" },
+  { id: 26, text: "Uno de nosotros sería el primero en vender al grupo por dinero ¿Quién?" },
+  { id: 27, text: "Uno de nosotros tiene un gusto musical horrible ¿Quién?" },
+  { id: 28, text: "Uno de nosotros siempre hace dramas por todo ¿Quién?" },
+  { id: 29, text: "Uno de nosotros moriría solo rodeado de gatos ¿Quién?" },
+  { id: 30, text: "Uno de nosotros sigue siendo mantenido por sus papás ¿Quién?" },
+  { id: 31, text: "Uno de nosotros se emborracha más rápido que nadie ¿Quién?" },
+  { id: 32, text: "Uno de nosotros sería un pésimo stripper ¿Quién?" },
+  { id: 33, text: "Uno de nosotros siempre está en modo víctima ¿Quién?" },
+  { id: 34, text: "Uno de nosotros es el chismoso del grupo ¿Quién?" },
+  { id: 35, text: "Uno de nosotros es tan inútil que ni en Sims tendría trabajo ¿Quién?" },
+  { id: 36, text: "Uno de nosotros seguramente ha fingido un orgasmo ¿Quién?" },
+  { id: 37, text: "Uno de nosotros no sobreviviría un mes sin internet ¿Quién?" },
+  { id: 38, text: "Uno de nosotros sería el peor vecino del mundo ¿Quién?" },
+  { id: 39, text: "Uno de nosotros no sabe cómo funcionan las cosas básicas en la vida ¿Quién?" },
+  { id: 40, text: "Uno de nosotros le debe dinero a medio mundo ¿Quién?" },
+  { id: 41, text: "Uno de nosotros siempre tiene excusas absurdas ¿Quién?" },
+  { id: 42, text: "Uno de nosotros sería la estrella de un reality show de fracasados ¿Quién?" },
+  { id: 43, text: "Uno de nosotros terminará en una secta ¿Quién?" },
+  { id: 44, text: "Uno de nosotros nunca debería tener hijos ¿Quién?" },
+  { id: 45, text: "Uno de nosotros sería el peor compañero de viaje ¿Quién?" },
+  { id: 46, text: "Uno de nosotros cree que es gracioso pero no lo es ¿Quién?" },
+  { id: 47, text: "Uno de nosotros siempre tiene ideas terribles ¿Quién?" },
+  { id: 48, text: "Uno de nosotros es el más probable de olvidar su propio cumpleaños ¿Quién?" },
+  { id: 49, text: "Uno de nosotros claramente es el más tonto del grupo ¿Quién?" },
+  { id: 50, text: "Uno de nosotros no puede manejar ni su propia vida ¿Quién?" },
+  { id: 51, text: "Uno de nosotros se viste como si aún estuviera en los 2000 ¿Quién?" },
+  { id: 52, text: "Uno de nosotros siempre está en la friendzone ¿Quién?" },
+  { id: 53, text: "Uno de nosotros sería el más probable de convertirse en meme ¿Quién?" },
+  { id: 54, text: "Uno de nosotros sería el más odiado por la familia política ¿Quién?" },
+  { id: 55, text: "Uno de nosotros se gastaría todo el dinero en apuestas ¿Quién?" },
+  { id: 56, text: "Uno de nosotros definitivamente necesita terapia urgente ¿Quién?" },
+  { id: 57, text: "Uno de nosotros sería el primero en escapar en una emergencia ¿Quién?" },
+  { id: 58, text: "Uno de nosotros no sabe cómo usar un cajero automático ¿Quién?" },
+  { id: 59, text: "Uno de nosotros haría cualquier cosa por comida gratis ¿Quién?" },
+  { id: 60, text: "Uno de nosotros no tiene ni idea de cómo ligar ¿Quién?" },
+  { id: 61, text: "Uno de nosotros sería el peor compañero de cuarto ¿Quién?" },
+  { id: 62, text: "Uno de nosotros siempre interrumpe conversaciones ¿Quién?" },
+  { id: 63, text: "Uno de nosotros siempre llega tarde a todo ¿Quién?" },
+  { id: 64, text: "Uno de nosotros tiene el ego más grande ¿Quién?" },
+  { id: 65, text: "Uno de nosotros sería el primero en llorar en una discusión ¿Quién?" },
+  { id: 66, text: "Uno de nosotros sería el primero en quedarse sin dinero en un viaje ¿Quién?" },
+  { id: 67, text: "Uno de nosotros probablemente engañaría en una relación ¿Quién?" },
+  { id: 68, text: "Uno de nosotros nunca terminará su carrera ¿Quién?" },
+  { id: 69, text: "Uno de nosotros es el más probable de hacer algo estúpido por atención ¿Quién?" },
+  { id: 70, text: "Uno de nosotros siempre se queja de todo ¿Quién?" },
+  { id: 71, text: "Uno de nosotros sería el peor líder del grupo ¿Quién?" },
+  { id: 72, text: "Uno de nosotros nunca paga sus deudas ¿Quién?" },
+  { id: 73, text: "Uno de nosotros es el más probable de romper algo caro ¿Quién?" },
+  { id: 74, text: "Uno de nosotros tiene las peores habilidades sociales ¿Quién?" },
+  { id: 75, text: "Uno de nosotros siempre pierde cosas importantes ¿Quién?" },
+  { id: 76, text: "Uno de nosotros tiene los peores secretos ¿Quién?" },
+  { id: 77, text: "Uno de nosotros tiene el peor sentido del humor ¿Quién?" },
+  { id: 78, text: "Uno de nosotros es el más probable de cancelar planes a último minuto ¿Quién?" },
+  { id: 79, text: "Uno de nosotros nunca sabe qué está pasando ¿Quién?" },
+  { id: 80, text: "Uno de nosotros se duerme en las fiestas ¿Quién?" },
+  { id: 81, text: "Uno de nosotros es el más probable de ser arrestado ¿Quién?" },
+  { id: 82, text: "Uno de nosotros no sabe guardar secretos ¿Quién?" },
+  { id: 83, text: "Uno de nosotros es el más probable de caer en estafas ¿Quién?" },
+  { id: 84, text: "Uno de nosotros siempre hace preguntas estúpidas ¿Quién?" },
+  { id: 85, text: "Uno de nosotros tiene el peor historial amoroso ¿Quién?" },
+  { id: 86, text: "Uno de nosotros siempre se olvida de las fechas importantes ¿Quién?" },
+  { id: 87, text: "Uno de nosotros siempre interrumpe con algo irrelevante ¿Quién?" },
+  { id: 88, text: "Uno de nosotros es el más probable de enviar mensajes borracho ¿Quién?" },
+  { id: 89, text: "Uno de nosotros tiene las peores habilidades para ligar ¿Quién?" },
+  { id: 90, text: "Uno de nosotros siempre toma las peores decisiones ¿Quién?" },
+  { id: 91, text: "Uno de nosotros es el más probable de perderse en un lugar conocido ¿Quién?" },
+  { id: 92, text: "Uno de nosotros siempre exagera sus historias ¿Quién?" },
+  { id: 93, text: "Uno de nosotros tiene las peores habilidades culinarias ¿Quién?" },
+  { id: 94, text: "Uno de nosotros es el más probable de tener un accidente embarazoso ¿Quién?" },
+  { id: 95, text: "Uno de nosotros siempre olvida sus contraseñas ¿Quién?" },
+  { id: 96, text: "Uno de nosotros siempre llega con excusas tontas ¿Quién?" },
+  { id: 97, text: "Uno de nosotros sería el peor comediante ¿Quién?" },
+  { id: 98, text: "Uno de nosotros es el más probable de quedarse dormido en el trabajo ¿Quién?" },
+  { id: 99, text: "Uno de nosotros tiene los peores modales en la mesa ¿Quién?" },
+  { id: 100, text: "Uno de nosotros siempre tiene los peores consejos ¿Quién?" },
+];
+
+        let usedChallenges = []; // Matriz temporal de retos usados
+        let timerInterval;
+
+        // Generar un reto aleatorio
+        function generateChallenge() {
+            if (usedChallenges.length === challenges.length) {
+                alert("¡Todos los retos han sido usados!");
+                return;
+            }
+
+            let challenge;
+            do {
+                const randomIndex = Math.floor(Math.random() * challenges.length);
+                challenge = challenges[randomIndex];
+            } while (usedChallenges.includes(challenge.id));
+
+            usedChallenges.push(challenge.id);
+            document.getElementById("challenge").innerText = challenge.text;
+
+            startTimer();
+        }
+
+        // Temporizador de 1:30 minutos
+        function startTimer() {
+            clearInterval(timerInterval);
+            let timeRemaining = 90; // Tiempo en segundos
+            const timerElement = document.getElementById("timer");
+
+            timerInterval = setInterval(() => {
+                const minutes = Math.floor(timeRemaining / 60);
+                const seconds = timeRemaining % 60;
+                timerElement.innerText = `${minutes}:${seconds < 10 ? "0" : ""}${seconds}`;
+                if (timeRemaining <= 0) {
+                    clearInterval(timerInterval);
+                    timerElement.innerText = "¡Tiempo terminado!";
+                }
+                timeRemaining--;
+            }, 1000);
+        }
+    </script>
+</body>
+</html>

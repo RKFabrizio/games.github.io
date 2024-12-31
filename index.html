@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    <title>Juego de Charadas</title>
+    <style>
+        body {
+            font-family: Poppins, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #ff1493;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        h1, h2 {
+            text-align: center;
+            margin: 10px 0;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 500px;
+        }
+
+        .input-group {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 10px 0;
+        }
+
+        input[type="text"] {
+            flex: 1;
+            padding: 10px;
+            font-size: 16px;
+            border-radius: 10px;
+            border: none;
+            outline: none;
+            margin-right: 10px;
+        }
+
+        .button {
+            background-color: #4caf50;
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            font-size: 16px;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+
+        .button:hover {
+            background-color: #45a049;
+        }
+
+        .participants {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+            margin-top: 10px;
+        }
+
+        .participant {
+            background-color: white;
+            color: #ff1493;
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .games {
+            margin: 20px 0;
+        }
+
+        .game-button {
+            background-color: #00bfff;
+            border: none;
+            color: white;
+            padding: 15px;
+            margin: 5px 0;
+            font-size: 16px;
+            border-radius: 20px;
+            width: 100%;
+            cursor: pointer;
+        }
+
+        .game-button:hover {
+            background-color: #006FFF;
+        }
+
+        .game-button.active {
+            background-color: #006FFF; /* Estilo active */
+        }
+
+        #start-game {
+            background-color: #bf00ff;
+            padding: 15px;
+            color:white;
+            border-radius: 20px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 20px;
+            width: 100%;
+            border:none;
+        }
+
+        #start-game:hover {
+            background-color: #b800e6;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+         
+
+        <h2>Juegos</h2>
+        <div class="games">
+            <button class="game-button" onclick="selectGame(this, 'CSM - Charadas Super Masoquistas')">CSM - Charadas Super Masoquistas</button>
+            <button class="game-button" onclick="selectGame(this, 'Cabrones HDP - Hora de Pelear')">Cabrones HDP - Hora de Pelear</button>
+            <button class="game-button" onclick="selectGame(this, 'Yo Nunca')">Yo Nunca</button>
+        </div>
+
+        <button id="start-game" onclick="startGame()">Iniciar Juego</button>
+    </div>
+
+    <script>
+         
+
+        function selectGame(button, gameName) {
+            // Remover clase active de todos los botones
+            document.querySelectorAll('.game-button').forEach(btn => btn.classList.remove('active'));
+            // Agregar clase active al botón seleccionado
+            // Agregar clase active al botón seleccionado
+            button.classList.add('active');
+            selectedGame = gameName;
+        }
+
+        function startGame() {
+     
+
+    if (!selectedGame || selectedGame.trim() === "") {
+        alert("Por favor, selecciona un juego.");
+        return;
+    }
+
+    // Redirigir a la página del juego seleccionado
+    switch (selectedGame) {
+        case 'CSM - Charadas Super Masoquistas':
+            window.location.href = 'csmr.html';
+            break;
+        case 'Cabrones HDP - Hora de Pelear':
+            window.location.href = 'ptm.html';
+            break;
+        case 'Yo Nunca':
+            window.location.href = 'yonunca.html';
+            break;
+        default:
+            alert('Juego no encontrado');
+    }
+}
+
+    </script>
+</body>
+</html>
